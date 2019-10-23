@@ -1,0 +1,14 @@
+---
+  - name: Delete existing local time
+    file:
+      dest: /etc/localtime
+      state: absent
+  - name: Install AEST local time
+    file:
+      src: /usr/share/zoneinfo/Australia/Melbourne
+      dest: /etc/localtime
+      state: link
+  - name: Restart rsyslog to ensure timestamps are correct
+    systemd:
+      name: rsyslog
+      state: restarted
